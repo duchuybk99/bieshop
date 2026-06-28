@@ -1,11 +1,13 @@
+import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
 import type { Metadata } from 'next'
 
-import RichText from '@/components/RichText'
-import ProductGallery from '@/components/ProductGallery'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { Suspense } from 'react'
-import type { DefaultTypedEditorState } from '@payloadcms/richtext-lexical'
+
+import FadeInSection from '@/components/FadeInSection'
+import ProductGallery from '@/components/ProductGallery'
+import RichText from '@/components/RichText'
 
 type ProductStatus = 'available' | 'preorder' | 'soldout'
 
@@ -47,9 +49,9 @@ const statusLabels: Record<ProductStatus, string> = {
 }
 
 const statusClasses: Record<ProductStatus, string> = {
-  available: 'bg-[#dff2dc] text-[#276032]',
-  preorder: 'bg-[#ffe3c2] text-[#9a4c17]',
-  soldout: 'bg-[#e8e2dc] text-[#6f6258]',
+  available: 'bg-[#1A7A4A] text-white',
+  preorder: 'bg-[#2E5FA3] text-white',
+  soldout: 'bg-[#9CA3AF] text-white',
 }
 
 const actionLabels: Record<ProductStatus, string> = {
@@ -59,9 +61,9 @@ const actionLabels: Record<ProductStatus, string> = {
 }
 
 const contactLinks = [
-  { href: 'https://zalo.me/0123456789', label: 'Zalo', className: 'bg-[#1aa260] hover:bg-[#16874f]' },
-  { href: 'https://m.me/pagename', label: 'Facebook', className: 'bg-[#1877f2] hover:bg-[#1264cf]' },
-  { href: 'tel:0123456789', label: '0123456789', className: 'bg-[#7a3f2a] hover:bg-[#5e2f1f]' },
+  { href: 'https://zalo.me/0123456789', label: 'Zalo', className: 'bg-[#0068FF] hover:brightness-110' },
+  { href: 'https://m.me/pagename', label: 'Facebook', className: 'bg-[#1877F2] hover:brightness-110' },
+  { href: 'tel:0123456789', label: '0123456789', className: 'bg-[#2E5FA3] hover:bg-[#1B3F7A]' },
 ]
 
 const formatPrice = (price?: number | null) => {
@@ -147,51 +149,59 @@ async function RelatedProducts({ product }: { product: Product }) {
   if (!related.length) return null
 
   return (
-    <section className="mt-16 border-t border-[#ead8c3] pt-12">
-      <div className="mb-7 flex items-end justify-between gap-4">
-        <h2 className="text-3xl font-black text-[#3f2c20]">Sản phẩm liên quan</h2>
-        <Link className="font-bold text-[#b75b3b] hover:text-[#7a3f2a]" href="/products">
+    <FadeInSection className="mt-16 pt-12">
+      <div className="mb-8 flex items-end justify-between gap-4">
+        <h2 className="font-heading text-3xl font-semibold italic text-[#1A1A2E] md:text-5xl">
+          Sản phẩm liên quan
+        </h2>
+        <Link
+          className="font-semibold text-[#2E5FA3] transition-all duration-300 ease-in-out hover:text-[#1B3F7A]"
+          href="/products"
+        >
           Xem tất cả
         </Link>
       </div>
-      <div className="grid gap-6 md:grid-cols-3">
+      <div className="grid gap-7 md:grid-cols-3">
         {related.map((item) => {
           const image = getImages(item)[0]
+
           return (
             <Link
-              className="group overflow-hidden rounded-md border border-[#ead8c3] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-[#7a3f2a]/10"
+              className="group overflow-hidden rounded-2xl bg-white shadow-sm shadow-[#1B2B4B]/10 transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl hover:shadow-[#1B2B4B]/20"
               href={`/products/${item.slug}`}
               key={item.id}
             >
-              <div className="aspect-[4/5] overflow-hidden bg-[#f3e3d2]">
+              <div className="aspect-[4/5] overflow-hidden bg-[#D0DCF0]">
                 {image ? (
                   <img
                     alt={image.alt}
-                    className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    className="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
                     src={image.url}
                   />
                 ) : (
-                  <div className="flex h-full items-center justify-center text-sm text-[#8a6b55]">
+                  <div className="flex h-full items-center justify-center text-sm text-[#5A6A8A]">
                     Hình ảnh sản phẩm
                   </div>
                 )}
               </div>
               <div className="p-5">
                 <span
-                  className={`inline-flex rounded-full px-3 py-1 text-xs font-black ${statusClasses[item.status]}`}
+                  className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${statusClasses[item.status]}`}
                 >
                   {statusLabels[item.status]}
                 </span>
-                <h3 className="mt-4 text-xl font-black text-[#3f2c20]">{item.name}</h3>
+                <h3 className="font-heading mt-4 text-xl font-semibold italic text-[#1A1A2E]">
+                  {item.name}
+                </h3>
                 {formatPrice(item.price) ? (
-                  <p className="mt-2 font-bold text-[#b75b3b]">{formatPrice(item.price)}</p>
+                  <p className="mt-2 font-semibold text-[#2E5FA3]">{formatPrice(item.price)}</p>
                 ) : null}
               </div>
             </Link>
           )
         })}
       </div>
-    </section>
+    </FadeInSection>
   )
 }
 
@@ -200,7 +210,7 @@ async function ProductContent({ slug }: { slug: string }) {
 
   if (error) {
     return (
-      <div className="rounded-md border border-[#e8c7b6] bg-[#fff4eb] p-6 text-sm font-medium text-[#7a3f2a]">
+      <div className="rounded-2xl bg-white p-6 text-sm font-medium text-[#1B3F7A] shadow-sm">
         {error}
       </div>
     )
@@ -215,35 +225,35 @@ async function ProductContent({ slug }: { slug: string }) {
 
   return (
     <>
-      <div className="grid gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+      <FadeInSection className="grid gap-12 lg:grid-cols-[0.95fr_1.05fr]">
         <ProductGallery images={images} productName={product.name} />
 
         <div className="lg:sticky lg:top-28 lg:self-start">
           {product.category ? (
-            <p className="mb-3 text-sm font-black uppercase tracking-[0.24em] text-[#b75b3b]">
+            <p className="mb-3 text-sm font-semibold uppercase tracking-[0.24em] text-[#2E5FA3]">
               {product.category}
             </p>
           ) : null}
-          <h1 className="text-4xl font-black leading-tight text-[#3f2c20] md:text-6xl">
+          <h1 className="font-heading text-4xl font-semibold italic leading-tight tracking-[0.05em] text-[#1A1A2E] md:text-6xl">
             {product.name}
           </h1>
-          <div className="mt-5 flex flex-wrap items-center gap-3">
+          <div className="mt-6 flex flex-wrap items-center gap-3">
             <span
-              className={`inline-flex rounded-full px-4 py-2 text-sm font-black ${statusClasses[product.status]}`}
+              className={`inline-flex rounded-full px-4 py-2 text-sm font-semibold ${statusClasses[product.status]}`}
             >
               {statusLabels[product.status]}
             </span>
-            {price ? <p className="text-2xl font-black text-[#b75b3b]">{price}</p> : null}
+            {price ? <p className="text-2xl font-semibold text-[#2E5FA3]">{price}</p> : null}
           </div>
 
           {product.description ? (
             <RichText
-              className="mt-7 text-[#5c4030] prose-a:text-[#b75b3b]"
+              className="mt-8 font-light leading-[1.8] text-[#5A6A8A] prose-a:text-[#2E5FA3]"
               data={product.description}
               enableGutter={false}
             />
           ) : (
-            <p className="mt-7 leading-8 text-[#6b4b37]">
+            <p className="mt-8 font-light leading-[1.8] text-[#5A6A8A]">
               Mô tả sản phẩm đang được cập nhật. Bạn có thể nhắn shop để biết thêm chất liệu,
               kích thước và thời gian hoàn thiện.
             </p>
@@ -251,10 +261,10 @@ async function ProductContent({ slug }: { slug: string }) {
 
           <a
             aria-disabled={!canOrder}
-            className={`mt-8 inline-flex w-full items-center justify-center rounded-full px-8 py-4 text-sm font-black text-white transition sm:w-auto ${
+            className={`mt-9 inline-flex w-full items-center justify-center rounded-full px-8 py-4 text-sm font-semibold text-white transition-all duration-300 ease-in-out sm:w-auto ${
               canOrder
-                ? 'bg-[#b75b3b] shadow-lg shadow-[#b75b3b]/20 hover:bg-[#9f4b31]'
-                : 'pointer-events-none bg-[#9c9188]'
+                ? 'bg-[#2E5FA3] shadow-lg shadow-[#2E5FA3]/20 hover:scale-[1.02] hover:bg-[#1B3F7A] hover:brightness-110'
+                : 'pointer-events-none bg-[#9CA3AF]'
             }`}
             href={canOrder ? 'https://zalo.me/0123456789' : undefined}
             rel={canOrder ? 'noreferrer' : undefined}
@@ -263,12 +273,14 @@ async function ProductContent({ slug }: { slug: string }) {
             {actionLabels[product.status]}
           </a>
 
-          <div className="mt-8 rounded-md border border-[#ead8c3] bg-white p-5">
-            <h2 className="text-xl font-black text-[#3f2c20]">Liên hệ để đặt hàng</h2>
+          <div className="mt-9 rounded-2xl bg-white p-5 shadow-sm shadow-[#1B2B4B]/10">
+            <h2 className="font-heading text-xl font-semibold italic text-[#1A1A2E]">
+              Liên hệ để đặt hàng
+            </h2>
             <div className="mt-4 flex flex-col gap-3 sm:flex-row">
               {contactLinks.map((link) => (
                 <a
-                  className={`inline-flex flex-1 items-center justify-center rounded-full px-5 py-3 text-sm font-black text-white transition ${link.className}`}
+                  className={`inline-flex flex-1 items-center justify-center rounded-full px-5 py-3 text-sm font-semibold text-white transition-all duration-300 ease-in-out hover:scale-[1.02] ${link.className}`}
                   href={link.href}
                   key={link.label}
                   rel={link.href.startsWith('http') ? 'noreferrer' : undefined}
@@ -280,12 +292,14 @@ async function ProductContent({ slug }: { slug: string }) {
             </div>
           </div>
         </div>
-      </div>
+      </FadeInSection>
 
       {youtubeEmbedUrl ? (
-        <section className="mt-16">
-          <h2 className="mb-6 text-3xl font-black text-[#3f2c20]">Video sản phẩm</h2>
-          <div className="aspect-video overflow-hidden rounded-md bg-[#3f2c20]">
+        <FadeInSection className="mt-16">
+          <h2 className="font-heading mb-6 text-3xl font-semibold italic text-[#1A1A2E] md:text-5xl">
+            Video sản phẩm
+          </h2>
+          <div className="aspect-video overflow-hidden rounded-xl bg-[#1B2B4B] shadow-sm shadow-[#1B2B4B]/20">
             <iframe
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               allowFullScreen
@@ -294,12 +308,12 @@ async function ProductContent({ slug }: { slug: string }) {
               title={`Video ${product.name}`}
             />
           </div>
-        </section>
+        </FadeInSection>
       ) : null}
 
       <Suspense
         fallback={
-          <div className="mt-16 rounded-md border border-[#ead8c3] bg-white p-6 text-sm text-[#6b4b37]">
+          <div className="mt-16 rounded-2xl bg-white p-6 text-sm text-[#5A6A8A] shadow-sm">
             Đang tải sản phẩm liên quan...
           </div>
         }
@@ -314,10 +328,10 @@ export default async function ProductDetailPage({ params }: ProductPageProps) {
   const { slug } = await params
 
   return (
-    <section className="container py-12 md:py-16">
+    <section className="container py-14 md:py-18">
       <Suspense
         fallback={
-          <div className="rounded-md border border-[#ead8c3] bg-white p-6 text-sm text-[#6b4b37]">
+          <div className="rounded-2xl bg-white p-6 text-sm text-[#5A6A8A] shadow-sm">
             Đang tải chi tiết sản phẩm...
           </div>
         }

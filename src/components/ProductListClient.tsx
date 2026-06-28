@@ -45,9 +45,9 @@ const statusLabels: Record<ProductStatus, string> = {
 }
 
 const statusClasses: Record<ProductStatus, string> = {
-  available: 'bg-[#dff2dc] text-[#276032]',
-  preorder: 'bg-[#ffe3c2] text-[#9a4c17]',
-  soldout: 'bg-[#e8e2dc] text-[#6f6258]',
+  available: 'bg-[#1A7A4A] text-white',
+  preorder: 'bg-[#2E5FA3] text-white',
+  soldout: 'bg-[#9CA3AF] text-white',
 }
 
 const formatPrice = (price?: number | null) => {
@@ -80,14 +80,14 @@ export default function ProductListClient({ products }: ProductListClientProps) 
 
   return (
     <div>
-      <div className="mb-8 flex flex-col gap-4 rounded-md border border-[#ead8c3] bg-white p-4 md:flex-row md:items-center md:justify-between">
+      <div className="mb-10 flex flex-col gap-4 rounded-2xl border border-[#D0DCF0] bg-white p-4 shadow-sm md:flex-row md:items-center md:justify-between">
         <div className="flex flex-wrap gap-2">
           {filters.map((item) => (
             <button
-              className={`rounded-full px-4 py-2 text-sm font-bold transition ${
+              className={`rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ease-in-out hover:scale-[1.02] ${
                 filter === item.value
-                  ? 'bg-[#b75b3b] text-white'
-                  : 'bg-[#f6eadb] text-[#6b4b37] hover:bg-[#ead8c3]'
+                  ? 'bg-[#2E5FA3] text-white shadow-sm shadow-[#2E5FA3]/20'
+                  : 'bg-[#EEF4FB] text-[#5A6A8A] hover:bg-[#D0DCF0] hover:text-[#1A1A2E]'
               }`}
               key={item.value}
               onClick={() => setFilter(item.value)}
@@ -98,10 +98,10 @@ export default function ProductListClient({ products }: ProductListClientProps) 
           ))}
         </div>
 
-        <label className="flex items-center gap-3 text-sm font-bold text-[#6b4b37]">
+        <label className="flex items-center gap-3 text-sm font-medium text-[#5A6A8A]">
           Sắp xếp
           <select
-            className="rounded-full border border-[#d7bda2] bg-[#fffaf2] px-4 py-2 text-[#3f2c20] outline-none focus:border-[#b75b3b]"
+            className="rounded-full border border-[#D0DCF0] bg-[#EEF4FB] px-4 py-2 text-[#1A1A2E] outline-none transition-all duration-300 ease-in-out focus:border-[#2E5FA3] focus:bg-white"
             onChange={(event) => setSort(event.target.value as SortValue)}
             value={sort}
           >
@@ -112,38 +112,41 @@ export default function ProductListClient({ products }: ProductListClientProps) 
       </div>
 
       {visibleProducts.length ? (
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-7 sm:grid-cols-2 lg:grid-cols-3">
           {visibleProducts.map((product) => {
             const imageUrl = getProductImage(product)
             const price = formatPrice(product.price)
+
             return (
               <Link
-                className="group overflow-hidden rounded-md border border-[#ead8c3] bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl hover:shadow-[#7a3f2a]/10"
+                className="group overflow-hidden rounded-2xl bg-white shadow-sm shadow-[#1B2B4B]/10 transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl hover:shadow-[#1B2B4B]/20"
                 href={`/products/${product.slug}`}
                 key={product.id}
               >
-                <div className="aspect-[4/5] overflow-hidden bg-[#f3e3d2]">
+                <div className="aspect-[4/5] overflow-hidden bg-[#D0DCF0]">
                   {imageUrl ? (
                     <img
                       alt={product.name}
-                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                      className="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
                       src={imageUrl}
                     />
                   ) : (
-                    <div className="flex h-full items-center justify-center px-6 text-center text-sm text-[#8a6b55]">
+                    <div className="flex h-full items-center justify-center px-6 text-center text-sm text-[#5A6A8A]">
                       Hình ảnh sản phẩm
                     </div>
                   )}
                 </div>
                 <div className="space-y-4 p-5">
                   <span
-                    className={`inline-flex rounded-full px-3 py-1 text-xs font-black ${statusClasses[product.status]}`}
+                    className={`inline-flex rounded-full px-3 py-1 text-xs font-semibold ${statusClasses[product.status]}`}
                   >
                     {statusLabels[product.status]}
                   </span>
                   <div>
-                    <h2 className="text-xl font-black text-[#3f2c20]">{product.name}</h2>
-                    {price ? <p className="mt-2 font-bold text-[#b75b3b]">{price}</p> : null}
+                    <h2 className="font-heading text-xl font-semibold italic text-[#1A1A2E]">
+                      {product.name}
+                    </h2>
+                    {price ? <p className="mt-2 font-semibold text-[#2E5FA3]">{price}</p> : null}
                   </div>
                 </div>
               </Link>
@@ -151,7 +154,7 @@ export default function ProductListClient({ products }: ProductListClientProps) 
           })}
         </div>
       ) : (
-        <div className="rounded-md border border-[#ead8c3] bg-white p-8 text-center text-[#6b4b37]">
+        <div className="rounded-2xl bg-white p-8 text-center text-[#5A6A8A] shadow-sm">
           Chưa có sản phẩm phù hợp với bộ lọc này.
         </div>
       )}

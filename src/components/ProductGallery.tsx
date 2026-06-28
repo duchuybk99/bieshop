@@ -18,7 +18,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
 
   if (!images.length) {
     return (
-      <div className="flex aspect-[4/5] items-center justify-center rounded-md bg-[#f3e3d2] px-8 text-center text-[#8a6b55]">
+      <div className="flex aspect-[4/5] items-center justify-center rounded-2xl bg-[#D0DCF0] px-8 text-center text-[#5A6A8A] shadow-sm">
         Hình ảnh sản phẩm đang được cập nhật.
       </div>
     )
@@ -26,10 +26,10 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
 
   return (
     <div className="space-y-4">
-      <div className="aspect-[4/5] overflow-hidden rounded-md bg-[#f3e3d2]">
+      <div className="group aspect-[4/5] overflow-hidden rounded-2xl bg-[#D0DCF0] shadow-sm shadow-[#1B2B4B]/10">
         <img
           alt={activeImage.alt || productName}
-          className="h-full w-full object-cover"
+          className="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
           src={activeImage.url}
         />
       </div>
@@ -39,8 +39,10 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
           {images.map((image, index) => (
             <button
               aria-label={`Xem hình ${index + 1}`}
-              className={`aspect-square overflow-hidden rounded-md border-2 bg-[#f3e3d2] transition ${
-                activeIndex === index ? 'border-[#b75b3b]' : 'border-transparent hover:border-[#d7bda2]'
+              className={`aspect-square overflow-hidden rounded-xl border bg-[#D0DCF0] transition-all duration-300 ease-in-out hover:scale-[1.02] ${
+                activeIndex === index
+                  ? 'border-[#2E5FA3] shadow-sm shadow-[#2E5FA3]/20'
+                  : 'border-transparent hover:border-[#D0DCF0]'
               }`}
               key={`${image.url}-${index}`}
               onClick={() => setActiveIndex(index)}
@@ -48,7 +50,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
             >
               <img
                 alt={image.alt || `${productName} ${index + 1}`}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-cover transition-all duration-300 ease-in-out hover:scale-105"
                 src={image.url}
               />
             </button>

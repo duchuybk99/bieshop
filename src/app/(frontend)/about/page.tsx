@@ -1,17 +1,22 @@
-import { Mail } from 'lucide-react'
+import { Gem, HandHeart, Mail, PackageCheck } from 'lucide-react'
+
+import FadeInSection from '@/components/FadeInSection'
 
 const values = [
   {
     title: 'Thủ công tâm huyết',
     description: 'Mỗi sản phẩm được làm bằng tay với sự kiên nhẫn và cảm giác chăm chút.',
+    icon: HandHeart,
   },
   {
     title: 'Chất lượng cao',
     description: 'BIE SHOP chọn chất liệu kỹ, hoàn thiện sạch và đóng gói cẩn thận.',
+    icon: Gem,
   },
   {
     title: 'Giao hàng toàn quốc',
     description: 'Sản phẩm được tư vấn thời gian hoàn thiện và gửi đến bạn ở mọi tỉnh thành.',
+    icon: PackageCheck,
   },
 ]
 
@@ -24,15 +29,15 @@ const contacts = [
 
 export default function AboutPage() {
   return (
-    <div className="bg-[#fffaf2]">
-      <section className="container grid gap-10 py-12 md:py-16 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-        <div className="min-h-[420px] overflow-hidden rounded-md bg-[#e8c7b6]">
-          <div className="flex h-full min-h-[420px] items-end bg-[linear-gradient(135deg,#f7dcc8_0%,#d99068_48%,#7a3f2a_100%)] p-8">
-            <div className="rounded-md bg-[#fffaf2]/88 p-6 backdrop-blur">
-              <p className="text-sm font-black uppercase tracking-[0.24em] text-[#b75b3b]">
+    <div className="bg-[#EEF4FB] text-[#1A1A2E]">
+      <FadeInSection className="container grid gap-12 py-14 md:py-18 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+        <div className="min-h-[420px] overflow-hidden rounded-2xl bg-white shadow-xl shadow-[#1B2B4B]/10">
+          <div className="flex h-full min-h-[420px] items-end bg-[linear-gradient(135deg,#EEF4FB_0%,#FFFFFF_50%,#D0DCF0_100%)] p-8">
+            <div className="rounded-2xl bg-white/80 p-6 shadow-sm backdrop-blur-xl">
+              <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#2E5FA3]">
                 Made by hand
               </p>
-              <p className="mt-3 text-2xl font-black text-[#3f2c20]">
+              <p className="font-heading mt-3 text-2xl font-semibold italic leading-[1.35] text-[#1A1A2E]">
                 Một góc nhỏ dành cho chất liệu, màu sắc và những món quà có câu chuyện.
               </p>
             </div>
@@ -40,23 +45,25 @@ export default function AboutPage() {
         </div>
 
         <div>
-          <p className="text-sm font-black uppercase tracking-[0.24em] text-[#b75b3b]">
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#2E5FA3]">
             Về chúng tôi
           </p>
-          <h1 className="mt-4 text-4xl font-black leading-tight text-[#3f2c20] md:text-6xl">
+          <h1 className="font-heading mt-4 text-4xl font-semibold italic leading-tight tracking-[0.05em] text-[#1A1A2E] md:text-6xl">
             Chúng tôi tin đồ thủ công giữ được sự ấm áp của bàn tay người làm.
           </h1>
-          <p className="mt-6 text-lg leading-8 text-[#6b4b37]">
+          <p className="mt-7 text-lg font-light leading-[1.8] text-[#5A6A8A]">
             BIE SHOP là một thương hiệu handmade nhỏ, nơi mỗi món đồ được tạo ra chậm rãi,
             tinh tế và đủ gần gũi để trở thành một phần trong đời sống hằng ngày.
           </p>
         </div>
-      </section>
+      </FadeInSection>
 
-      <section className="border-y border-[#ead8c3] bg-white py-16">
+      <FadeInSection className="bg-white py-16">
         <div className="container grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-          <h2 className="text-3xl font-black text-[#3f2c20] md:text-4xl">Câu chuyện thương hiệu</h2>
-          <div className="space-y-5 text-lg leading-8 text-[#6b4b37]">
+          <h2 className="font-heading text-3xl font-semibold italic text-[#1A1A2E] md:text-5xl">
+            Câu chuyện thương hiệu
+          </h2>
+          <div className="space-y-5 text-lg font-light leading-[1.8] text-[#5A6A8A]">
             <p>
               BIE SHOP bắt đầu từ những buổi tối ngồi thử chất liệu, phối màu và làm lại từng
               chi tiết nhỏ cho đến khi sản phẩm có cảm giác vừa vặn. Chúng tôi yêu những món
@@ -73,49 +80,65 @@ export default function AboutPage() {
             </p>
           </div>
         </div>
-      </section>
+      </FadeInSection>
 
-      <section className="container py-16">
-        <h2 className="text-3xl font-black text-[#3f2c20] md:text-4xl">Giá trị cốt lõi</h2>
-        <div className="mt-8 grid gap-5 md:grid-cols-3">
-          {values.map((value) => (
-            <article className="rounded-md border border-[#ead8c3] bg-white p-6" key={value.title}>
-              <h3 className="text-xl font-black text-[#3f2c20]">{value.title}</h3>
-              <p className="mt-4 leading-7 text-[#6b4b37]">{value.description}</p>
-            </article>
-          ))}
+      <FadeInSection className="container py-16">
+        <h2 className="font-heading text-3xl font-semibold italic text-[#1A1A2E] md:text-5xl">
+          Giá trị cốt lõi
+        </h2>
+        <div className="mt-9 grid gap-6 md:grid-cols-3">
+          {values.map((value) => {
+            const Icon = value.icon
+
+            return (
+              <article
+                className="rounded-2xl bg-white p-6 shadow-sm shadow-[#1B2B4B]/10 transition-all duration-300 ease-in-out hover:scale-[1.02] hover:shadow-xl hover:shadow-[#1B2B4B]/20"
+                key={value.title}
+              >
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-full bg-[#EEF4FB] text-[#2E5FA3]">
+                  <Icon aria-hidden className="h-6 w-6" strokeWidth={1.7} />
+                </div>
+                <h3 className="font-heading text-xl font-semibold italic text-[#1A1A2E]">
+                  {value.title}
+                </h3>
+                <p className="mt-4 font-light leading-[1.8] text-[#5A6A8A]">{value.description}</p>
+              </article>
+            )
+          })}
         </div>
-      </section>
+      </FadeInSection>
 
-      <section className="bg-[#7a3f2a] py-16 text-white">
+      <FadeInSection className="bg-[#1B2B4B] py-16 text-white">
         <div className="container">
           <div className="flex max-w-3xl flex-col gap-4">
-            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-[#f7dcc8] text-[#7a3f2a]">
-              <Mail aria-hidden className="h-5 w-5" />
+            <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white/10 text-white">
+              <Mail aria-hidden className="h-5 w-5" strokeWidth={1.7} />
             </div>
-            <h2 className="text-3xl font-black md:text-4xl">Liên hệ BIE SHOP</h2>
-            <p className="text-[#f7dcc8]">
+            <h2 className="font-heading text-3xl font-semibold italic md:text-5xl">
+              Liên hệ BIE SHOP
+            </h2>
+            <p className="font-light leading-[1.8] text-white/75">
               Nhắn cho shop để đặt hàng, hỏi mẫu riêng hoặc trao đổi về quà tặng handmade.
             </p>
           </div>
-          <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-9 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
             {contacts.map((contact) => (
               <a
-                className="rounded-md border border-white/20 bg-white/10 p-5 transition hover:bg-white/15"
+                className="rounded-2xl bg-white/10 p-5 transition-all duration-300 ease-in-out hover:scale-[1.02] hover:bg-white/20"
                 href={contact.href}
                 key={contact.label}
                 rel={contact.href.startsWith('http') ? 'noreferrer' : undefined}
                 target={contact.href.startsWith('http') ? '_blank' : undefined}
               >
-                <p className="text-sm font-black uppercase tracking-[0.18em] text-[#f7dcc8]">
+                <p className="text-sm font-semibold uppercase tracking-[0.18em] text-white/70">
                   {contact.label}
                 </p>
-                <p className="mt-2 font-bold text-white">{contact.value}</p>
+                <p className="mt-2 font-medium text-white">{contact.value}</p>
               </a>
             ))}
           </div>
         </div>
-      </section>
+      </FadeInSection>
     </div>
   )
 }

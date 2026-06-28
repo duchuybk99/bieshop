@@ -1,5 +1,6 @@
 import { Suspense } from 'react'
 
+import FadeInSection from '@/components/FadeInSection'
 import ProductListClient, { type ProductListItem } from '@/components/ProductListClient'
 
 interface ProductsResponse {
@@ -35,7 +36,7 @@ async function ProductsContent() {
 
   if (error) {
     return (
-      <div className="rounded-md border border-[#e8c7b6] bg-[#fff4eb] p-6 text-sm font-medium text-[#7a3f2a]">
+      <div className="rounded-2xl bg-white p-6 text-sm font-medium text-[#1B3F7A] shadow-sm">
         {error}
       </div>
     )
@@ -43,14 +44,16 @@ async function ProductsContent() {
 
   return (
     <>
-      <div className="mb-8 flex flex-col justify-between gap-3 md:flex-row md:items-end">
+      <div className="mb-10 flex flex-col justify-between gap-4 md:flex-row md:items-end">
         <div>
-          <p className="text-sm font-black uppercase tracking-[0.24em] text-[#b75b3b]">
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-[#2E5FA3]">
             Bộ sưu tập handmade
           </p>
-          <h1 className="mt-3 text-4xl font-black text-[#3f2c20] md:text-6xl">Sản phẩm</h1>
+          <h1 className="font-heading mt-3 text-4xl font-semibold italic tracking-[0.05em] text-[#1A1A2E] md:text-6xl">
+            Sản phẩm
+          </h1>
         </div>
-        <p className="text-sm font-bold text-[#6b4b37]">{total} sản phẩm</p>
+        <p className="text-sm font-medium text-[#5A6A8A]">{total} sản phẩm</p>
       </div>
       <ProductListClient products={products} />
     </>
@@ -59,16 +62,16 @@ async function ProductsContent() {
 
 export default function ProductsPage() {
   return (
-    <section className="container py-12 md:py-16">
+    <FadeInSection className="container py-14 md:py-18">
       <Suspense
         fallback={
-          <div className="rounded-md border border-[#ead8c3] bg-white p-6 text-sm text-[#6b4b37]">
+          <div className="rounded-2xl bg-white p-6 text-sm text-[#5A6A8A] shadow-sm">
             Đang tải danh sách sản phẩm...
           </div>
         }
       >
         <ProductsContent />
       </Suspense>
-    </section>
+    </FadeInSection>
   )
 }

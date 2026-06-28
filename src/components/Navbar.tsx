@@ -1,9 +1,9 @@
 'use client'
 
+import { Menu, MessageCircle, Phone, X } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Menu, MessageCircle, Phone, X } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 const navLinks = [
   { href: '/', label: 'Trang chủ' },
@@ -15,27 +15,45 @@ const contactLinks = [
   {
     href: 'https://zalo.me/0123456789',
     label: 'Zalo',
-    className: 'bg-[#1aa260] text-white hover:bg-[#16874f]',
+    className: 'text-white hover:scale-105 hover:bg-white/10',
     icon: <MessageCircle aria-hidden className="h-4 w-4" />,
   },
   {
     href: 'https://m.me/pagename',
     label: 'Facebook',
-    className: 'bg-[#1877f2] text-white hover:bg-[#1264cf]',
-    icon: <span aria-hidden className="text-sm font-bold leading-none">f</span>,
+    className: 'text-white hover:scale-105 hover:bg-white/10',
+    icon: (
+      <span aria-hidden className="text-sm font-bold leading-none">
+        f
+      </span>
+    ),
   },
 ]
 
 export default function Navbar() {
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
+  const [hasScrolled, setHasScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => setHasScrolled(window.scrollY > 8)
+
+    handleScroll()
+    window.addEventListener('scroll', handleScroll, { passive: true })
+
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   return (
-    <header className="fixed inset-x-0 top-0 z-40 border-b border-[#ead8c3] bg-[#fffaf2]/95 backdrop-blur">
+    <header
+      className={`fixed inset-x-0 top-0 z-40 bg-[#1B2B4B]/95 text-white transition-all duration-300 ease-in-out ${
+        hasScrolled ? 'shadow-sm shadow-[#1B2B4B]/20 backdrop-blur-xl' : 'backdrop-blur-none'
+      }`}
+    >
       <nav className="container flex h-20 items-center justify-between">
         <Link
           aria-label="BIE SHOP"
-          className="text-xl font-black tracking-[0.18em] text-[#7a3f2a]"
+          className="font-[var(--font-playfair-display)] text-2xl font-bold tracking-[0.18em] text-white transition-all duration-300 ease-in-out hover:scale-[1.02]"
           href="/"
           onClick={() => setIsOpen(false)}
         >
@@ -45,15 +63,21 @@ export default function Navbar() {
         <div className="hidden items-center gap-8 md:flex">
           {navLinks.map((link) => {
             const active = pathname === link.href
+
             return (
               <Link
-                className={`text-sm font-semibold transition ${
-                  active ? 'text-[#b75b3b]' : 'text-[#6b4b37] hover:text-[#b75b3b]'
+                className={`group relative text-sm font-medium tracking-[0.08em] text-white/90 transition-all duration-300 ease-in-out hover:text-white ${
+                  active ? 'text-white' : ''
                 }`}
                 href={link.href}
                 key={link.href}
               >
                 {link.label}
+                <span
+                  className={`absolute -bottom-2 left-0 h-px bg-white transition-all duration-300 ease-in-out ${
+                    active ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}
+                />
               </Link>
             )
           })}
@@ -63,7 +87,7 @@ export default function Navbar() {
           {contactLinks.map((link) => (
             <a
               aria-label={link.label}
-              className={`flex h-10 w-10 items-center justify-center rounded-full shadow-sm transition ${link.className}`}
+              className={`flex h-10 w-10 items-center justify-center rounded-full transition-all duration-300 ease-in-out ${link.className}`}
               href={link.href}
               key={link.label}
               rel="noreferrer"
@@ -75,7 +99,7 @@ export default function Navbar() {
           ))}
           <a
             aria-label="Gọi điện"
-            className="flex h-10 w-10 items-center justify-center rounded-full bg-[#7a3f2a] text-white shadow-sm transition hover:bg-[#5e2f1f]"
+            className="flex h-10 w-10 items-center justify-center rounded-full text-white transition-all duration-300 ease-in-out hover:scale-105 hover:bg-white/10"
             href="tel:0123456789"
             title="Gọi điện"
           >
@@ -86,7 +110,7 @@ export default function Navbar() {
         <button
           aria-expanded={isOpen}
           aria-label={isOpen ? 'Đóng menu' : 'Mở menu'}
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-[#d7bda2] text-[#7a3f2a] md:hidden"
+          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/20 text-white transition-all duration-300 ease-in-out hover:scale-[1.02] hover:bg-white/10 md:hidden"
           onClick={() => setIsOpen((open) => !open)}
           type="button"
         >
@@ -94,12 +118,16 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {isOpen ? (
-        <div className="border-t border-[#ead8c3] bg-[#fffaf2] px-4 py-5 md:hidden">
+      <div
+        className={`overflow-hidden border-t border-white/10 bg-[#1B2B4B] transition-all duration-300 ease-in-out md:hidden ${
+          isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        }`}
+      >
+        <div className="px-4 py-5">
           <div className="flex flex-col gap-3">
             {navLinks.map((link) => (
               <Link
-                className="rounded-md px-3 py-3 text-base font-semibold text-[#4a3325] hover:bg-[#f6eadb]"
+                className="rounded-xl px-3 py-3 text-base font-medium tracking-[0.04em] text-white transition-all duration-300 ease-in-out hover:bg-white/10"
                 href={link.href}
                 key={link.href}
                 onClick={() => setIsOpen(false)}
@@ -111,7 +139,7 @@ export default function Navbar() {
           <div className="mt-5 flex gap-3">
             {contactLinks.map((link) => (
               <a
-                className={`flex flex-1 items-center justify-center gap-2 rounded-full px-4 py-3 text-sm font-bold ${link.className}`}
+                className={`flex flex-1 items-center justify-center gap-2 rounded-full border border-white/20 px-4 py-3 text-sm font-bold transition-all duration-300 ease-in-out ${link.className}`}
                 href={link.href}
                 key={link.label}
                 rel="noreferrer"
@@ -123,7 +151,7 @@ export default function Navbar() {
             ))}
           </div>
         </div>
-      ) : null}
+      </div>
     </header>
   )
 }

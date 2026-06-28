@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 
-import { Inter } from 'next/font/google'
+import { Be_Vietnam_Pro, Playfair_Display } from 'next/font/google'
 import React from 'react'
 
 import ContactFloat from '@/components/ContactFloat'
@@ -10,15 +10,30 @@ import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
 
 import './globals.css'
 
-const inter = Inter({
+const beVietnamPro = Be_Vietnam_Pro({
   subsets: ['latin', 'vietnamese'],
-  variable: '--font-inter',
+  variable: '--font-be-vietnam-pro',
+  weight: ['300', '400', '500', '600', '700'],
+})
+
+const playfairDisplay = Playfair_Display({
+  subsets: ['latin', 'vietnamese'],
+  variable: '--font-playfair-display',
+  weight: ['500', '600', '700', '800', '900'],
+  style: ['normal', 'italic'],
 })
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html className={inter.variable} data-theme="light" lang="vi" suppressHydrationWarning>
-      <body className={`${inter.className} bg-[#fffaf2] text-[#3f2c20] antialiased`}>
+    <html
+      className={`${beVietnamPro.variable} ${playfairDisplay.variable}`}
+      data-theme="light"
+      lang="vi"
+      suppressHydrationWarning
+    >
+      <body
+        className={`${beVietnamPro.className} bg-[#EEF4FB] text-[#1A1A2E] antialiased`}
+      >
         <Navbar />
         <main className="min-h-screen pt-20">{children}</main>
         <ContactFloat />
