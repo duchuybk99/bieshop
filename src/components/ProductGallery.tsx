@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import { useState } from 'react'
 
 interface GalleryImage {
@@ -26,11 +27,12 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
 
   return (
     <div className="space-y-4">
-      <div className="group aspect-[4/5] overflow-hidden rounded-2xl bg-[#D0DCF0] shadow-sm shadow-[#1B2B4B]/10">
-        <img
+      <div className="group relative aspect-[4/5] overflow-hidden rounded-2xl bg-[#D0DCF0] shadow-sm shadow-[#1B2B4B]/10">
+        <Image
           alt={activeImage.alt || productName}
-          className="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
+          className="object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
           src={activeImage.url}
+          fill
         />
       </div>
 
@@ -39,7 +41,7 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
           {images.map((image, index) => (
             <button
               aria-label={`Xem hình ${index + 1}`}
-              className={`aspect-square overflow-hidden rounded-xl border bg-[#D0DCF0] transition-all duration-300 ease-in-out hover:scale-[1.02] ${
+              className={`relative aspect-square overflow-hidden rounded-xl border bg-[#D0DCF0] transition-all duration-300 ease-in-out hover:scale-[1.02] ${
                 activeIndex === index
                   ? 'border-[#2E5FA3] shadow-sm shadow-[#2E5FA3]/20'
                   : 'border-transparent hover:border-[#D0DCF0]'
@@ -48,10 +50,11 @@ export default function ProductGallery({ images, productName }: ProductGalleryPr
               onClick={() => setActiveIndex(index)}
               type="button"
             >
-              <img
+              <Image
                 alt={image.alt || `${productName} ${index + 1}`}
-                className="h-full w-full object-cover transition-all duration-300 ease-in-out hover:scale-105"
+                className="object-cover transition-all duration-300 ease-in-out hover:scale-105"
                 src={image.url}
+                fill
               />
             </button>
           ))}

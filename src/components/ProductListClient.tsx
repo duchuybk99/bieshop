@@ -1,5 +1,6 @@
 'use client'
 
+import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 
@@ -123,12 +124,13 @@ export default function ProductListClient({ products }: ProductListClientProps) 
                 href={`/products/${product.slug}`}
                 key={product.id}
               >
-                <div className="aspect-[4/5] overflow-hidden bg-[#D0DCF0]">
+                <div className="relative aspect-[4/5] overflow-hidden bg-[#D0DCF0]">
                   {imageUrl ? (
-                    <img
+                    <Image
                       alt={product.name}
-                      className="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
+                      className="object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
                       src={imageUrl}
+                      fill
                     />
                   ) : (
                     <div className="flex h-full items-center justify-center px-6 text-center text-sm text-[#5A6A8A]">
