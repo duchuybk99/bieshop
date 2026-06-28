@@ -1,53 +1,41 @@
 import type { Metadata } from 'next'
 
-import { cn } from '@/utilities/ui'
-import { GeistMono } from 'geist/font/mono'
-import { GeistSans } from 'geist/font/sans'
+import { Inter } from 'next/font/google'
 import React from 'react'
 
-import { AdminBar } from '@/components/AdminBar'
-import { Footer } from '@/Footer/Component'
-import { Header } from '@/Header/Component'
-import { Providers } from '@/providers'
-import { InitTheme } from '@/providers/Theme/InitTheme'
+import ContactFloat from '@/components/ContactFloat'
+import Navbar from '@/components/Navbar'
+import { getServerSideURL } from '@/utilities/getURL'
 import { mergeOpenGraph } from '@/utilities/mergeOpenGraph'
-import { draftMode } from 'next/headers'
 
 import './globals.css'
-import { getServerSideURL } from '@/utilities/getURL'
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { isEnabled } = await draftMode()
+const inter = Inter({
+  subsets: ['latin', 'vietnamese'],
+  variable: '--font-inter',
+})
 
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html className={cn(GeistSans.variable, GeistMono.variable)} lang="en" suppressHydrationWarning>
-      <head>
-        <InitTheme />
-        <link href="/favicon.ico" rel="icon" sizes="32x32" />
-        <link href="/favicon.svg" rel="icon" type="image/svg+xml" />
-      </head>
-      <body>
-        <Providers>
-          <AdminBar
-            adminBarProps={{
-              preview: isEnabled,
-            }}
-          />
-
-          <Header />
-          {children}
-          <Footer />
-        </Providers>
+    <html className={inter.variable} data-theme="light" lang="vi" suppressHydrationWarning>
+      <body className={`${inter.className} bg-[#fffaf2] text-[#3f2c20] antialiased`}>
+        <Navbar />
+        <main className="min-h-screen pt-20">{children}</main>
+        <ContactFloat />
       </body>
     </html>
   )
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL(getServerSideURL()),
-  openGraph: mergeOpenGraph(),
-  twitter: {
-    card: 'summary_large_image',
-    creator: '@payloadcms',
+  title: {
+    default: 'BIE SHOP | Đồ thủ công handmade',
+    template: '%s | BIE SHOP',
   },
+  description: 'BIE SHOP mang đến những sản phẩm thủ công ấm áp, tinh tế và giàu cảm xúc.',
+  metadataBase: new URL(getServerSideURL()),
+  openGraph: mergeOpenGraph({
+    title: 'BIE SHOP | Đồ thủ công handmade',
+    description: 'Đồ handmade và quà tặng thủ công dành cho những điều thật lòng.',
+  }),
 }
